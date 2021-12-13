@@ -1,0 +1,49 @@
+
+<html>
+    <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+    <p>
+    이미지 업로드 테스트 창
+    </p>
+    <div>
+    <input type="file" id="imageInput" />
+    <hr />
+    <button onclick="upload()">
+    업로드
+    </button>
+    </div>
+    </body>
+    
+    <script>
+        function upload() {
+            const imageInput = $("#imageInput")[0];
+            // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+            console.log("imageInput: ", imageInput.files)
+            
+            if(imageInput.files.length === 0){
+                alert("파일을 선택해주세요");
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append("image", imageInput.files[0]);
+            
+            axios({
+                method: 'post',
+                url: 'http://localhost:3002/image',
+                data: formData
+            })
+            .then(response=>{
+                alert("이미지가 등록되었습니다");
+            })
+            .catch(error=>{
+                console.log(error);
+            })
+        }
+    </script>
+    </html>
+     
